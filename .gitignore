@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+dist/
+build/
+*.log
+
+# Environment files
+.env
+.env.*          # any other env files like .env.dev, .env.prod
+
+# Database
+*.sqlite3
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# FastAPI / Uvicorn
+*.db
