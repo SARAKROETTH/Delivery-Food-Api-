@@ -1,32 +1,26 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base  # fixed
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
+# Load environment variables
 load_dotenv()
 
-# MySQL connection URL
-SQLALCHEMY_DATABASE_URL = (
-    f"mysql+pymysql://{os.getenv('DB_USER')}:"
-    f"{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:"
-    f"{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
-)
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL not set in .env")
 
-# Create SQLAlchemy engine
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL,
-    pool_pre_ping=True,   # keep connection alive
-    echo=True             # optional: prints SQL queries
-)
+# Create engine
+engine = create_engine(DATABASE_URL, echo=True)
 
-# Create Session class
+# Create session
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Base class for models
 Base = declarative_base()
 
-# Dependency for FastAPI routes
+# Dependency
 def get_db():
     db = SessionLocal()
     try:

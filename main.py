@@ -1,17 +1,23 @@
 from fastapi import FastAPI,Depends
 from fastapi.responses import JSONResponse
 
+from Config.DatabaseConfig import engine, Base
+
 from Config.DatabaseConfig import get_db
-from sqlalchemy.orm import Session
+
+from Models.Auth.UserModel import User as UserModel
+
+
+from Routes.AuthRoutes import router as auth_router
 app = FastAPI()
 
+
+app.include_router(auth_router)
+
+# Create tables automatically
+UserModel.metadata.create_all(bind=engine)
 
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
-
-
-@app.get("/user")
-async def get_user(db: Session = Depends(get_db)):
-    return JSONResponse(content={"message": "User endpoint", "db_status": "Connected", "db_url": str(db.bind.url)})
+    return {"message": "/docs to see API documentation and /auth/user to test database connection"}
