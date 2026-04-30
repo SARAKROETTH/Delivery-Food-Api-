@@ -1,13 +1,16 @@
 from pydantic import BaseModel
 
 
-class UserCreate(BaseModel):
-    username: str
-    phoneNumber: str
-    imageUrl: str | None = None
+class AdminCreate(BaseModel):
+    username :str
+    phoneNumber :str
+    codeCountry: str
+    countryDialCode : str
+    imageUrl :str
+    role:str
 
-class UserResponse(BaseModel):
-    id: int
-    username: str
-    phoneNumber: str
-    imageUrl: str | None = None
+class AdminRespone(BaseModel):
+    username :str
+    imageUrl :str
+    
+
