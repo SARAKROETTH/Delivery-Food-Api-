@@ -6,8 +6,7 @@ class AdminCreate(BaseModel):
     phoneNumber :str
     codeCountry: str
     countryDialCode : str
-    imageUrl :str
-    role:str
+    image_url :str
 
 class AdminRespone(BaseModel):
     username :str

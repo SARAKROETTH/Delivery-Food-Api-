@@ -1,18 +1,17 @@
-from sqlalchemy import Column, String,Enum,DateTime, func
+from sqlalchemy import Column, String,Enum,DateTime,func
 from Config.DatabaseConfig import Base
 from sqlalchemy.dialects.postgresql import UUID
 
 import uuid
 
-class User(Base):
-    __tablename__ = "users"
+class Admin(Base):
+    __tablename__ = "admin"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    username = Column(String(50), unique=False, index=True, nullable=False)
-    phoneNumber = Column(String(20), unique=True, index=True, nullable=False)
-    codeCountry = Column(String(2), nullable=False)
-    countryDialCode = Column(String(6), nullable=False)
-    imageUrl = Column(String(255), nullable=True)
+    username = Column(String(255),nullable=False )
+    email = Column(String(100),unique=True ,nullable=True)
+    password = Column(String(255),nullable=True)
+    image_url = Column(String)
 
     #  create Date
     created_at = Column(DateTime(timezone=True), server_default=func.now())
@@ -23,4 +22,3 @@ class User(Base):
         server_default=func.now(),
         onupdate=func.now()
     ) 
-
